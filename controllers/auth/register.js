@@ -30,7 +30,6 @@ exports.register = async (req, res) => {
       return res
         .status(500)
         .send("User registered, but verification email could not be sent.");
-      res.status(500).send("Server Error");
     }
   }
 };

@@ -10,6 +10,10 @@ app.use(express.json({ extended: false }));
 app.use(passport.initialize());
 
 // API Routes
+
+app.get("/ping", (req, res) => {
+  res.status(200).send("Pong!");
+});
 app.use("/api/auth", require("./routes/auth"));
 app.get("/", (req, res) => res.send("PulseWrite API is alive and kicking!"));
 

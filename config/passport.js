@@ -8,10 +8,9 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/api/auth/google/callback",
+      proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
-      // This function is called when Google successfully authenticates the user.
-      // `profile` contains the user's Google information.
       try {
         // 1. Check if a user already exists with this Google ID
         let user = await User.findOne({ googleId: profile.id });

@@ -2,29 +2,34 @@ const express = require("express");
 const connectDB = require("./config/db");
 const passport = require("passport");
 require("dotenv").config();
-
 require("./config/passport");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(express.json({ extended: false }));
 app.use(passport.initialize());
 
-// Routes
+// API Routes
 app.use("/api/auth", require("./routes/auth"));
-app.get("/", (req, res) => res.send("PulseWrite API Running"));
+app.get("/", (req, res) => res.send("PulseWrite API is alive and kicking!"));
 
-const startServer = async () => {
-  try {
-    await connectDB();
+if (process.env.VERCEL) {
+  connectDB();
+  module.exports = app;
+} else {
+  const PORT = process.env.PORT || 5000;
 
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-  } catch (error) {
-    console.error("Failed to start server:", error);
-    process.exit(1);
-  }
-};
+  const startServer = async () => {
+    try {
+      await connectDB();
+      app.listen(PORT, () =>
+        console.log(`[LOCAL] Server started successfully on port ${PORT}`)
+      );
+    } catch (error) {
+      console.error("Failed to start local server:", error);
+      process.exit(1);
+    }
+  };
 
-startServer();
+  startServer();
+}

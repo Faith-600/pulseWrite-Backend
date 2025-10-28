@@ -15,7 +15,9 @@ app.get("/ping", (req, res) => {
   res.status(200).send("Pong!");
 });
 app.use("/api/auth", require("./routes/auth"));
-app.get("/", (req, res) => res.send("PulseWrite API is alive and kicking!"));
+app.get("/", (req, res) => {
+  res.status(200).send("PulseWrite API is alive and kicking!");
+});
 
 if (process.env.VERCEL) {
   connectDB();

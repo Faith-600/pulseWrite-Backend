@@ -40,6 +40,13 @@ const UserSchema = new mongoose.Schema(
     verificationCodeExpires: {
       type: Date,
     },
+
+    otp: {
+      type: String,
+    },
+    otpExpires: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );

@@ -21,7 +21,7 @@ const sendVerificationEmail = async (to, code) => {
   console.log(`Sending verification email to ${to} with code ${code}`);
 
   const mailOptions = {
-    from: '"PulseWrite" <noreply@pulsewrite.com>', // sender address
+    from: '"PulseWrite" <ezekielfaith2001@gmail.com>', // sender address
     to: to, // list of receivers
     subject: "Your PulseWrite Verification Code", // Subject line
     html: `

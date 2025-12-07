@@ -3,7 +3,12 @@ const router = express.Router();
 const { check } = require("express-validator");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { register, login, verifyEmail } = require("../controllers/auth");
+const {
+  register,
+  login,
+  verifyEmail,
+  sendOtp,
+} = require("../controllers/auth");
 
 const registerValidation = [
   check("email", "Please include a valid email").isEmail(),
@@ -30,6 +35,12 @@ router.post(
     check("password", "Password is required").exists(),
   ],
   login
+);
+
+router.post(
+  "/send-otp",
+  [check("email", "Please include a valid email").isEmail()],
+  sendOtp
 );
 
 router.get(

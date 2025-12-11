@@ -41,6 +41,10 @@ const UserSchema = new mongoose.Schema(
       type: Date,
     },
 
+    resendCodeCooldownExpires: {
+      type: Date,
+    },
+
     otp: {
       type: String,
     },

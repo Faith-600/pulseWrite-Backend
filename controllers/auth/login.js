@@ -22,7 +22,15 @@ exports.login = async (req, res) => {
       { expiresIn: "5h" },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        const userDetails = {
+          id: user.id,
+          email: user.email,
+          // When you add more fields like 'name', you can add them here.
+        };
+        res.json({
+          token,
+          user: userDetails,
+        });
       }
     );
   } catch (error) {

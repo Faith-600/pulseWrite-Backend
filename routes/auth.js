@@ -3,11 +3,13 @@ const router = express.Router();
 const { check } = require("express-validator");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const { protect } = require("../middleware/authMiddleware");
 const {
   register,
   login,
   verifyEmail,
   sendOtp,
+  resendVerificationCode,
 } = require("../controllers/auth");
 
 const registerValidation = [
@@ -43,6 +45,12 @@ router.post(
   sendOtp
 );
 
+router.post(
+  "/resend-code",
+  [check("email", "Please include a valid email").isEmail()],
+  resendVerificationCode
+);
+
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -71,7 +79,16 @@ router.get(
       (err, token) => {
         if (err) throw err;
 
-        res.json({ token });
+        const userDetails = {
+          id: req.user.id,
+          email: req.user.email,
+        };
+
+        // 2. Send back the consistent response object.
+        res.json({
+          token,
+          user: userDetails,
+        });
       }
     );
   }

@@ -23,6 +23,7 @@ passport.use(
         // 2. If no user with that Google ID, create a new one
         const newUser = new User({
           googleId: profile.id,
+          name: profile.displayName,
           email: profile.emails[0].value,
           provider: "google",
           isVerified: true,

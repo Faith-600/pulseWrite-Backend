@@ -12,7 +12,7 @@ exports.sendOtp = async (req, res) => {
       return res.status(404).json({ msg: "User with this email not found." });
     }
 
-    // Generate a 6-digit OTP
+    // Generate a 4-digit OTP
     const otp = crypto.randomInt(100000, 999999).toString();
 
     user.otp = otp;

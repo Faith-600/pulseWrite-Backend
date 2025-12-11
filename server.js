@@ -3,7 +3,8 @@ const connectDB = require("./config/db");
 const passport = require("passport");
 require("dotenv").config();
 require("./config/passport");
-
+// const { errorHandler } = require('./middleware/errorMiddleware');
+const { errorHandler } = require("./middleware/errorMiddleware");
 const app = express();
 
 app.use(express.json({ extended: false }));
@@ -12,6 +13,11 @@ app.use(passport.initialize());
 // API Routes
 
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/users", require("./routes/user"));
+app.use("/api/posts", require("./routes/post"));
+
+app.use(errorHandler);
+
 app.get("/", (req, res) => {
   res.status(200).send("PulseWrite API is alive and kicking!");
 });

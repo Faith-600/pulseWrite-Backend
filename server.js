@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const connectDB = require("./config/db");
 const passport = require("passport");
 require("dotenv").config();
@@ -6,6 +7,25 @@ require("./config/passport");
 // const { errorHandler } = require('./middleware/errorMiddleware');
 const { errorHandler } = require("./middleware/errorMiddleware");
 const app = express();
+
+app.use(cors());
+
+// const allowedOrigins = [
+//     'http://localhost:3000', // Your local frontend
+//     'https://your-live-frontend-url.vercel.app' // Your deployed frontend URL
+// ];
+
+// const corsOptions = {
+//     origin: (origin, callback) => {
+//         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     }
+// };
+
+// app.use(cors(corsOptions));
 
 app.use(express.json({ extended: false }));
 app.use(passport.initialize());

@@ -82,6 +82,7 @@ router.get(
         const userDetails = {
           id: req.user.id,
           email: req.user.email,
+          isVerified: user.isVerified,
         };
 
         // 2. Send back the consistent response object.

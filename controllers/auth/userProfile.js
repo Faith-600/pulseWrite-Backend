@@ -24,6 +24,9 @@ const updateProfile = async (req, res) => {
       email: updatedUser.email,
       username: updatedUser.username,
       profilePictureUrl: updatedUser.profilePictureUrl,
+      dateOfBirth: updatedUser.dateOfBirth,
+      country: updatedUser.country,
+      bio: updatedUser.bio,
     });
   } catch (error) {
     console.error(error.message);

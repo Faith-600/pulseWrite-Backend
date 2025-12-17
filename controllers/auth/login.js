@@ -14,6 +14,15 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid Credentials" });
 
+    if (!user.isVerified) {
+      return res.status(200).json({
+        isVerified: false,
+        user: {
+          email: user.email,
+        },
+      });
+    }
+
     const payload = { user: { id: user.id } };
 
     jwt.sign(
@@ -25,6 +34,7 @@ exports.login = async (req, res) => {
         const userDetails = {
           id: user.id,
           email: user.email,
+          isVerified: user.isVerified,
           // When you add more fields like 'name', you can add them here.
         };
         res.json({

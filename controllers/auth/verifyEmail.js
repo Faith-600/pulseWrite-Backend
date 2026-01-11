@@ -19,11 +19,35 @@ exports.verifyEmail = async (req, res) => {
     user.verificationCode = undefined;
     await user.save();
 
-    res
-      .status(200)
-      .json({ msg: "Email verified successfully. You can now log in." });
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: "5h" },
+      (err, token) => {
+        if (err) throw err;
+
+        // 3. Create the user details object for the response (for consistency)
+        const userDetails = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          isVerified: user.isVerified,
+        };
+
+        res.status(200).json({
+          token,
+          user: userDetails,
+        });
+      }
+    );
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Server Error");
+    res.status(500).json({ msg: "Server error" });
   }
 };

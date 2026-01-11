@@ -37,7 +37,53 @@ const updateProfile = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+const updateInterests = async (req, res) => {
+  const { interests } = req.body;
+
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    user.interests = interests;
+
+    await user.save();
+
+    res.json({
+      msg: "Interests updated successfully",
+      user: {
+        id: user._id,
+        name: user.name,
+        interests: user.interests,
+      },
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+const getMyProfile = async (req, res) => {
+  try {
+    // We get the user ID from the token via the 'protect' middleware.
+    // We use .select('-password') to explicitly exclude the hashed password from the response.
+    const user = await User.findById(req.user.id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+};
 
 module.exports = {
   updateProfile,
+  updateInterests,
+  getMyProfile,
 };

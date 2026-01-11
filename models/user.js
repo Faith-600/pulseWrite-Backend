@@ -2,6 +2,37 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+    },
+
+    username: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+
+    profilePictureUrl: {
+      type: String,
+    },
+
+    dateOfBirth: {
+      type: Date,
+    },
+
+    country: {
+      type: String,
+    },
+
+    bio: {
+      type: String,
+    },
+
+    interests: {
+      type: [String], // Defines an array of strings
+      default: [], // Defaults to an empty array
+    },
+
     email: {
       type: String,
       required: true,
